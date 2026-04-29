@@ -87,7 +87,8 @@ Together they exhaust the trigonometric content of the 30-60-90 triangle.
 |---|---|
 | `60_Degree_Invariant_Riemann_Hypothesis.tex` | Paper source (English) / 英文论文源码 |
 | `60_Degree_Invariant_Riemann_Hypothesis.pdf` | Paper PDF (English) / 英文论文PDF |
-| `Riemann_Hypothesis_60_Degree_CN.tex` | Paper source (Chinese) / 中文论文源码 |
+| `60_Degree_Invariant_Riemann_Hypothesis_CN.tex` | Paper source (Chinese) / 中文论文源码 |
+| `60_Degree_Invariant_Riemann_Hypothesis_CN.pdf` | Paper PDF (Chinese) / 中文论文PDF |
 | `Fitted_Dynamical_Equation.py` | Parameter fitting & rolling prediction / 参数拟合与滚动预测 |
 | `Complete_Geometric_Dynamical_Equation.py` | Full geometric equation verification / 完整几何方程验证 |
 | `cone_visualization.py` | 3D cone visualization / 三维圆锥可视化 |
