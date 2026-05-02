@@ -44,9 +44,9 @@ import pandas as pd
 
 # ==================== 配置 ====================
 # DATA_FILE = r"D:\60_Degree_Invariant_Riemann_Hypothesis\riemann_zeros_data\riemann_zeros_5000.npy"
-DATA_FILE = r"D:\60_Degree_Invariant_Riemann_Hypothesis\riemann_zeros_data\riemann_zeros_50000.npy"
+DATA_FILE = r"D:\60_Degree_Invariant_Riemann_Hypothesis\riemann_zeros_data\riemann_zeros_100000.npy"
 
-OUTPUT_XLSX = r"D:\60_Degree_Invariant_Riemann_Hypothesis\perfect_form_results.xlsx"
+OUTPUT_XLSX = r"D:\60_Degree_Invariant_Riemann_Hypothesis\perfect_form_results1.xlsx"
 
 # 几何锁定参数
 COEFF_2 = 2.0                          # sec60°

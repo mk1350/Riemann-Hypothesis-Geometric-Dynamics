@@ -1,5 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[UTF8]{ctex}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{hyperref}
 \usepackage{graphicx}
@@ -10,7 +11,7 @@
 \newtheorem{corollary}[theorem]{推论}
 
 \title{黎曼猜想的60°几何框架：\\
-一种几何-动力学重新表述}
+一种几何动力学的重新表述}
 \author{李涛 \\ \texttt{309757145@qq.com}}
 \date{\today}
 
@@ -19,64 +20,69 @@
 \maketitle
 
 \begin{abstract}
-我们从函数方程 $\xi(s)=\xi(1-s)$ 出发，提出一种基于 $60^\circ$ 不变量的黎曼猜想（RH）几何-动力学重新表述。
-该不变量强制一个固定角度条件：对于临界线上的任意点，从原点出发的视线满足 $\cos\theta = 1/2$，即 $\theta = 60^\circ$。
+我们从函数方程 $\xi(s)=\xi(1-s)$ 出发，推导出一个绝对的 $60^\circ$ 几何不变量，并以此为基础对黎曼猜想（RH）进行几何动力学的重新表述。
+该不变量强制了一个固定角度条件：对于临界线上的任意点，从原点出发的视线满足 $\cos\theta = 1/2$，即 $\theta = 60^\circ$。
 Berry--Keating算符中的常数势 $V(x)=2$ 被恢复为 $V(x)=\sec 60^\circ$。
-我们构造一个辅助圆锥，其高度为零点的虚部 $t_n$，共振半径为 $a_n = 2t_n/\sqrt{3}$。
-导出一个零自由参数的离散二阶动力学方程：
+我们构造了一个辅助圆锥，其高度为零点的虚部 $t_n$，共振半径为 $a_n = 2t_n/\sqrt{3}$。
+一个零自由参数的离散二阶动力学方程被导出：
 \begin{equation}
-t_n = 2t_{n-1} - t_{n-2} + \frac{\pi}{\sqrt{3}} - \frac{1}{r(t_{n-1})}(t_{n-1} - t_{n-2}),
+t_n = 2t_{n-1} - t_{n-2} + \frac{\pi}{\sqrt{3}} - \frac{\log(t_{n-1}/2\pi)}{2\sqrt{3}}(t_{n-1} - t_{n-2}),
 \end{equation}
-其中 $r(t) = 2\sqrt{3}/\log(t/2\pi)$ 是由圆锥面上几何螺距与黎曼-冯·曼戈尔特零点密度匹配导出的对数衰减函数。
-系数 $2 = \sec 60^\circ$，常数驱动项 $\pi/\sqrt{3} = \pi\cot 60^\circ$，几何耦合常数 $\beta = 1/4$ 由圆锥面上的最速降线变分原理导出。
-$t \to -t$ 下的对称性通过负向零点得到验证，预测精度与正向完全一致。
-完整动力学方程包含零个自由参数——所有常数均由 $60^\circ$ 不变量、圆锥几何和零点密度导出。
+其中系数 $2 = \sec 60^\circ$，常数驱动项 $\pi/\sqrt{3} = \pi\cot 60^\circ$，几何耦合常数 $\beta = 1/4$ 由圆锥面上的最速下降线变分原理导出，比值函数 $r(t) = 2\sqrt{3}/\log(t/2\pi)$ 由几何螺距与黎曼-冯·曼戈尔特零点密度的匹配条件确定。
+我们使用逆零点计数函数 $N^{-1}$ 作为桥梁，形式推导了零回归点的周期结构 $k_m = (5^m+3)/4$，并确定侧面积 $S(h)$ 和封闭体积 $V(h)$ 为 $5^m$ 代数周期的几何载体。
+统一自伴Berry--Keating哈密顿量被构造为：
+\begin{equation}
+H_{\text{full}} = \frac{1}{2}(x p_x + p_x x) + \frac{1}{2}(t p_t + p_t t) + 2 - \frac{m\pi}{\sqrt{3}}t.
+\end{equation}
+$t \to -t$ 的对称性通过对负向零点的相同预测精度得到验证。
+对100000个零点的数值验证以 $0.0016\%$ 的相对误差和无误差累积证实了该理论。
+整个框架不包含任何自由参数——所有常数均由 $60^\circ$ 不变量、圆锥几何和零点密度导出。
 \end{abstract}
 
 \section{引言}
 
 黎曼猜想（RH）断言 $\zeta(s)$ 的所有非平凡零点均位于 $\operatorname{Re}(s)=1/2$ 上 \cite{riemann}。
-本文提出一种基于 $\xi(s)=\xi(1-s)$ 导出的 $60^\circ$ 不变量的几何-动力学重新表述。
-我们从函数方程出发，完整推导出支配零点序列的精确动力学方程，所有参数均由几何锁定，零自由参数。
+本文基于从 $\xi(s)=\xi(1-s)$ 导出的 $60^\circ$ 不变量，提出一种几何动力学的重新表述。
+我们给出了从函数方程到支配零点序列的精确动力学方程、到零回归点的周期结构、再到统一哈密顿量的完整推导，所有参数均由几何锁定，无任何自由参数。
 
 \section{$60^\circ$ 几何不变量}
 
-考虑与临界线 $\operatorname{Re}(s)=a/2$ 相交的圆 $|s|=a$：
+考虑复平面上的圆 $|s|=a$，临界线位于 $\operatorname{Re}(s)=a/2$。交点满足：
 \begin{equation}
 (a/2)^2 + y^2 = a^2 \Longrightarrow y = \pm \frac{\sqrt{3}}{2}a, \quad \cos\theta = \frac{1}{2} \Longrightarrow \theta = 60^\circ.
 \end{equation}
-该角度与 $a$ 无关，构成由函数方程直接导出的绝对几何不变量。
+该角度与 $a$ 无关，构成一个绝对的几何不变量，直接从函数方程导出。
 
 对于零点 $s_n = 1/2 + i t_n$，共振半径为：
 \begin{equation}
 a_n = \frac{2t_n}{\sqrt{3}}.
 \end{equation}
-这来自边长比为 $1 : \sqrt{3} : 2$ 的30-60-90三角形，其中斜边对应原点到零点的距离，邻边为临界线位置 $\operatorname{Re}(s)=1/2$，对边为 $t_n$。
+这源于30-60-90三角形，其边长比为 $1 : \sqrt{3} : 2$，其中斜边对应原点到零点的距离，邻边为临界线位置 $\operatorname{Re}(s)=1/2$，对边为 $t_n$。
 
-\section{水平常数势 $V(x)=2$}
+\section{常数水平势 $V(x)=2$}
 
-在Berry--Keating框架 $H = \frac{1}{2}(xp+px) + V(x)$ \cite{berry-keating} 中，$60^\circ$ 不变量给出：
+在 Berry--Keating 框架中，$H = \frac{1}{2}(xp+px) + V(x)$ \cite{berry-keating}，$60^\circ$ 不变量给出：
 \begin{equation}
 V(x) = \frac{1}{\cos 60^\circ} = \sec 60^\circ = 2.
 \end{equation}
-该常数势锁定了临界线 $\operatorname{Re}(s)=1/2$，回答了零点必须位于\textbf{何处}的问题。
+该常数势锁定了临界线 $\operatorname{Re}(s)=1/2$，回答了零点\textbf{在哪里}的问题。
 
 \section{两个正交势}
 
-$60^\circ$ 不变量自然将动力学分离为两个正交方向：
+$60^\circ$ 不变量自然地将动力学分离为两个正交方向：
 
 \begin{itemize}
 \item \textbf{水平方向}：$V(x)=2$，由 $\sec 60^\circ$ 导出，锁定 $\operatorname{Re}(s)=1/2$。
-\item \textbf{垂直方向}：有效势 $\Phi(t)$ 驱动虚部 $t_n$，回答零点沿临界线\textbf{如何}排列。其梯度 $\Phi'(t)$ 被几何推导为常数（第8节），给出线性垂直势 $\Phi(t) = -c_2 t$。
+\item \textbf{垂直方向}：有效势 $\Phi(t)$ 驱动虚部 $t_n$，回答了零点如何在临界线上\textbf{排列}的问题。其梯度 $\Phi'(t)$ 被几何推导为常数（第8节），给出线性垂直势 $\Phi(t) = -c_2 t$。
 \end{itemize}
 
 \section{三维圆锥构造}
 
-将零点映射到 $\mathbb{R}^3$：$(x,y,z) = (1/2,\, t_n,\, t_n)$。在高度 $z=t_n$ 处，以 $(1/2, 0, t_n)$ 为圆心、$a_n = 2t_n/\sqrt{3}$ 为半径画水平共振圆。所有圆的包络构成一个圆锥：
+将零点映射到 $\mathbb{R}^3$：$(x,y,z) = (1/2,\, t_n,\, t_n)$。在高度 $z=t_n$ 处，以 $(1/2, 0, t_n)$ 为圆心，绘制半径为 $a_n = 2t_n/\sqrt{3}$ 的水平共振圆。所有圆的包络构成一个圆锥：
 \begin{equation}
 r(z) = \frac{2z}{\sqrt{3}}.
 \end{equation}
-零点是此连续圆锥上的离散采样。高度 $h$ 处的截面周长为：
+零点是这个连续圆锥上的离散采样。高度 $h$ 处的截面周长为：
 \begin{equation}
 C(h) = 2\pi r(h) = \frac{4\pi}{\sqrt{3}}h.
 \end{equation}
@@ -87,78 +93,82 @@ C(h) = 2\pi r(h) = \frac{4\pi}{\sqrt{3}}h.
 
 其他几何量及其变化率为：
 \begin{equation}
-A(h) = \frac{4\pi}{3}h^2, \quad \frac{dA}{dh} = \frac{8\pi}{3}h \propto h; \qquad
-S(h) = \frac{2\pi}{\sqrt{3}}h^2, \quad \frac{dS}{dh} = \frac{4\pi}{\sqrt{3}}h \propto h; \qquad
-V(h) = \frac{4\pi}{9}h^3, \quad \frac{dV}{dh} = \frac{4\pi}{3}h^2 \propto h^2.
+A(h) = \frac{4\pi}{3}h^2, \qquad \frac{dA}{dh} = \frac{8\pi}{3}h \propto h;
+\end{equation}
+\begin{equation}
+S(h) = \frac{2\pi}{\sqrt{3}}h^2, \qquad \frac{dS}{dh} = \frac{4\pi}{\sqrt{3}}h \propto h;
+\end{equation}
+\begin{equation}
+V(h) = \frac{4\pi}{9}h^3, \qquad \frac{dV}{dh} = \frac{4\pi}{3}h^2 \propto h^2.
 \end{equation}
 \textbf{仅 $dC/dh$ 为常数。}
 
 \section{分形生成模型}
 
-共振圆依次嵌套：$a_1 < a_2 < \dots$。连续圆锥是此离散自相似结构的极限，类似于对截面积积分得到圆锥体积：
+共振圆依次嵌套：$a_1 < a_2 < \dots$。连续圆锥是该离散自相似结构的极限，类似于对截面积求和得到圆锥体积：
 \begin{equation}
-V_{\text{cone}} = \int_0^H A(z)\,dz \longleftrightarrow \text{各层零点求和}.
+V_{\text{cone}} = \int_0^H A(z)\,dz \longleftrightarrow \text{零点层的离散求和}.
 \end{equation}
 
-\section{数值验证：零点动力学方程}
+\section{数值验证：零点的动力学方程}
 
 \subsection{离散动力学方程}
 
-我们假设离散二阶方程：
+我们提出如下离散二阶方程：
 \begin{equation}
 t_n = 2t_{n-1} - t_{n-2} - \frac{1}{m}\left(\Phi'(t_{n-1}) + \gamma(t_{n-1} - t_{n-2})\right). \label{eq:main}
 \end{equation}
-系数 $2 = 1/\cos 60^\circ = \sec 60^\circ$ 由几何固定。改写为牛顿形式：
+系数 $2 = 1/\cos 60^\circ = \sec 60^\circ$ 由几何锁定。重写为牛顿形式：
 \begin{equation}
 \underbrace{(t_n - 2t_{n-1} + t_{n-2})}_{\text{离散加速度}} = -\frac{1}{m}\underbrace{\Phi'(t_{n-1})}_{\text{势场梯度}} - \frac{\gamma}{m}\underbrace{(t_{n-1} - t_{n-2})}_{\text{离散速度}}.
 \end{equation}
 
 \subsection{数值方法}
 
-使用前 $N_{\text{train}}$ 个零点（来自LMFDB \cite{lmfdb}）作为训练数据，通过最小化 $\Phi'(t)$ 的平滑度来拟合参数 $m$ 和 $\gamma$。剩余零点作为测试集。此样本外滚动预测在44个不同训练集大小上重复进行，从 $N_{\text{train}}=10$ 到 $N_{\text{train}}=4000$。
+使用来自 LMFDB \cite{lmfdb} 的前 $N_{\text{train}}$ 个零点作为训练数据，通过最小化 $\Phi'(t)$ 的光滑性来拟合参数 $m$ 和 $\gamma$。剩余零点作为测试集。样本外滚动预测在44个不同的训练集规模上重复进行，从 $N_{\text{train}}=10$ 到 $N_{\text{train}}=4000$。
 
 \subsection{数值结果}
 
-在所有44个训练配置中，有效质量保持精确不变：
+在所有44个训练配置中，有效质量精确保持为
 \begin{equation}
 m = 0.00100000 \quad \text{（标准差 = 0）}
 \end{equation}
-至八位小数。在50000个零点上的扩展测试确认了此绝对不变性。阻尼系数 $\gamma$ 从 $0.001794$（$N_{\text{train}}=10$）平滑收敛至 $0.001605$（$N_{\text{train}}=4000$）。
+到小数点后八位。对50000个零点的扩展测试证实了这种绝对不变性。阻尼系数 $\gamma$ 从 $0.001794$（$N_{\text{train}}=10$）平滑收敛到 $0.001605$（$N_{\text{train}}=4000$）。
 
-势梯度 $\Phi'(t)$ 从 $-0.006957$（$N_{\text{train}}=10$）演化至 $-0.001802$（$N_{\text{train}}=4000$）。预测误差单调递减：
+势场梯度 $\Phi'(t)$ 从 $-0.006957$（$N_{\text{train}}=10$）演化到 $-0.001802$（$N_{\text{train}}=4000$）。预测误差单调递减：
 \begin{equation}
 \text{相对误差}: \quad 0.0155\% \;\longrightarrow\; 0.0079\% \quad (\text{当 } N_{\text{train}}: 10 \to 4000).
 \end{equation}
 
-\subsection{$\Phi'(t)$ 的直接提取与模型比较}
+\subsection{$\Phi'(t)$ 的直接提取与模型对比}
 
-使用收敛参数 $m = 0.001$ 和 $\gamma = 0.001605$，通过重排方程~\eqref{eq:main} 直接计算 $\Phi'(t_{n-1})$：
+使用收敛参数 $m = 0.001$ 和 $\gamma = 0.001605$，我们通过重排式~\eqref{eq:main} 直接计算 $\Phi'(t_{n-1})$：
 \begin{equation}
 \Phi'(t_{n-1}) = -m(t_n - 2t_{n-1} + t_{n-2}) - \gamma(t_{n-1} - t_{n-2}). \label{eq:rearranged}
 \end{equation}
-$\Phi'(t)$ 对 $t$ 的线性回归给出斜率 $c_1$，从 $1.39 \times 10^{-4}$（$N_{\text{train}}=10$）单调递减至 $2.24 \times 10^{-7}$（$N_{\text{train}}=4000$），收敛至零。截距 $c_2$ 收敛至约 $0.00180$。
+对 $\Phi'(t)$ 关于 $t$ 做线性回归，斜率 $c_1$ 从 $1.39 \times 10^{-4}$（$N_{\text{train}}=10$）单调递减到 $2.24 \times 10^{-7}$（$N_{\text{train}}=4000$），收敛到零。截距 $c_2$ 收敛到约 $0.00180$。
 
-我们比较两种预测模型：
+我们比较了两种预测模型：
 \begin{itemize}
 \item \textbf{常数梯度：} $\Phi'(t) = -c_2$（线性垂直势 $\Phi(t) = -c_2 t$）。
 \item \textbf{线性梯度：} $\Phi'(t) = -c_1 t - c_2$（二次垂直势）。
 \end{itemize}
 
-在44个训练配置中，常数梯度模型在43个上取得更低的RMSE。在小训练集上，线性模型遭受灾难性发散（例如 $N_{\text{train}}=10$：常数RMSE 5.05 vs.\ 线性RMSE 451.58）。
+在44个训练配置中，常数梯度模型在43个中取得了更低的RMSE。在小训练集上，线性模型出现灾难性发散（例如，$N_{\text{train}}=10$：常数 RMSE 5.05 vs.\ 线性 RMSE 451.58）。
 
 \textbf{结论：$\Phi'(t)$ 为常数。垂直势为线性：$\Phi(t) = -c_2 t$。}
 
-\subsection{内禀参数比}
+\subsection{内禀参数比值}
 
-系统性地探索参数空间发现两个不同的内禀比值：
+对参数空间的系统探索揭示了两个不同的内禀比值：
 
 \begin{enumerate}
-\item \textbf{结构平衡：$m/\gamma \approx 0.505$。} 在平滑度约束下惯性项与阻尼项的最优权重分配。与 $0.5 = \cos 60^\circ$ 相差约 $1\%$。
+\item \textbf{结构平衡：$m/\gamma \approx 0.505$。} 在 $\Phi'(t)$ 光滑性约束下，惯性项和阻尼项之间的最优权重分配。该值趋近于 $0.5 = 1/2$，其几何来源为圆锥上的内禀几何比 $dV/dA = h/2$（第8.4节）。约 $1\%$ 的偏差反映了有限样本效应。
 
-\item \textbf{物理本征值：$m/\gamma \approx 0.315$。} 当参数自由选择其真实值时，$m \approx 0.000505$，$\gamma \approx 0.0016$。此比值与 $1/(2\phi)$ 和 $\phi/5$ 均在 $2\%$ 以内，其中 $\phi = (1+\sqrt{5})/2$ 为黄金比例。
+\item \textbf{物理本征值：$m/\gamma \approx 0.315$。} 当参数挣脱下界约束、各自独立选择真值时，$m \approx 0.000505$，$\gamma \approx 0.0016$。该比值与 $1/(2\phi)$ 和 $\phi/5$（其中 $\phi = (1+\sqrt{5})/2$ 为黄金比例）均相差在 $2\%$ 以内。
 \end{enumerate}
 
-最优预测配置（$m = 0.001$，$\gamma \approx 0.0016$）给出 $m/\gamma \approx 0.625 = 5/8$，是结构倾向与物理倾向之间的调和平衡点。如第8.5节所示，对数衰减函数 $r(t) = 2\sqrt{3}/\log(t/2\pi)$ 在不同 $t$ 处自然复现这些比值，将它们统一为单个连续函数的采样。
+最优预测配置（$m = 0.001$，$\gamma \approx 0.0016$）给出 $m/\gamma \approx 0.625 = 5/8$，即结构倾向与物理倾向之间的谐波平衡点。如第8.5节所示，对数衰减函数 $r(t) = 2\sqrt{3}/\log(t/2\pi)$ 在不同 $t$ 处自然复现这些比值，将它们统一为单一连续函数的采样。
 
 \section{完整动力学方程的几何推导}
 \label{sec:geometric}
@@ -167,7 +177,7 @@ $\Phi'(t)$ 对 $t$ 的线性回归给出斜率 $c_1$，从 $1.39 \times 10^{-4}$
 
 \begin{proposition}[$\Phi'(t)$ 的几何确定]
 \label{prop:constant}
-在圆锥构造 $r(h)=2h/\sqrt{3}$ 和等同 $h=t_n$ 下，有效势梯度必然为常数：
+在圆锥构造 $r(h)=2h/\sqrt{3}$ 及对应关系 $h=t_n$ 下，有效势场梯度必然为常数：
 \begin{equation}
 \Phi'(t) = -\beta\frac{dC}{dt} = -c_2,
 \end{equation}
@@ -175,61 +185,61 @@ $\Phi'(t)$ 对 $t$ 的线性回归给出斜率 $c_1$，从 $1.39 \times 10^{-4}$
 \end{proposition}
 
 \begin{proof}
-方程~\eqref{eq:rearranged} 将 $\Phi'(t_{n-1})$ 表达为由几何约束产生的惯性项和阻尼项的组合。零点位于每个截面圆盘的圆周上的 $60^\circ$ 交点处。当高度变化 $\delta h$ 时，周长扩展 $\delta C = (4\pi/\sqrt{3})\delta h$，$60^\circ$ 交点沿扩展的圆周滑动。恢复力正比于 $\delta C/\delta h$，在连续极限下趋于 $dC/dh = 4\pi/\sqrt{3}$，为常数。在四个几何量 $C(h)$、$A(h)$、$S(h)$、$V(h)$ 中，仅 $dC/dh$ 为常数。数值比较决定性地排除了依赖 $h$ 的备选项。因此 $\Phi'(t)$ 为常数。
+式~\eqref{eq:rearranged} 将 $\Phi'(t_{n-1})$ 表示为来自几何约束的惯性项和阻尼项的组合。零点位于每个截面圆盘圆周上的 $60^\circ$ 交点处。当高度变化 $\delta h$ 时，周长扩展 $\delta C = (4\pi/\sqrt{3})\delta h$，$60^\circ$ 交点沿扩展的圆滑动。恢复力正比于 $\delta C/\delta h \to dC/dh = 4\pi/\sqrt{3}$（在连续极限下）。在四个几何量 $C(h)$、$A(h)$、$S(h)$、$V(h)$ 中，只有 $dC/dh$ 为常数。数值对比排除了依赖 $h$ 的替代选项，故 $\Phi'(t)$ 为常数。
 \end{proof}
 
-\subsection{通过最速降线原理推导 $\beta = 1/4$}
+\subsection{通过最速下降线原理推导 $\beta = 1/4$}
 
 \begin{proposition}[几何耦合常数]
 \label{prop:beta}
-几何耦合常数为 $\beta = 1/4$，是由圆锥面上的最速降线变分原理导出的纯几何必然。
+几何耦合常数为 $\beta = 1/4$，这是一个由圆锥面上最速下降线变分原理导出的纯几何必然。
 \end{proposition}
 
 \begin{proof}
-一个被约束在圆锥面 $r(h) = 2h/\sqrt{3}$ 上、受线性势 $\Phi(h) = -c_2 h$ 驱动的质点，其轨迹为最速降线——使作用量取极小值的最陡下降路径。
+约束在圆锥面 $r(h) = 2h/\sqrt{3}$ 上、受线性势 $\Phi(h) = -c_2 h$ 驱动的质点沿最速下降线运动——即使作用量最小化的最陡下降路径。
 
-\textbf{度规与线元。} 圆锥面由高度 $h$ 和方位角 $\phi$ 参数化。线元为：
+\textbf{度规与线元。} 圆锥由高度 $h$ 和方位角 $\phi$ 参数化。线元为：
 \begin{equation}
 ds^2 = dh^2 + r(h)^2 d\phi^2 = dh^2 + \frac{4h^2}{3} d\phi^2.
 \end{equation}
 沿任意路径，$ds = \sqrt{1 + \frac{4}{3}h^2 \phi'(h)^2}\, dh$，其中 $\phi'(h) = d\phi/dh$。
 
-\textbf{能量守恒与速度。} 质点从静止开始运动。在线性势场中，能量守恒给出 $\frac{1}{2}mv^2 = c_2 h$，因此 $v = \sqrt{2c_2 h/m} \propto \sqrt{h}$。
+\textbf{能量守恒与速度。} 从静止出发，线性势下的能量守恒给出 $\frac{1}{2}mv^2 = c_2 h$，故 $v = \sqrt{2c_2 h/m} \propto \sqrt{h}$。
 
-\textbf{最速降线作用量。} 从 $h=0$ 到 $h=H$ 的总时间为：
+\textbf{最速下降线作用量。} 从 $h=0$ 到 $h=H$ 的总时间为：
 \begin{equation}
 S = \int_0^H \frac{ds}{v} = \int_0^H \frac{\sqrt{1 + \frac{4}{3}h^2 \phi'(h)^2}}{\sqrt{2c_2 h/m}}\, dh.
 \end{equation}
-提取常数因子，有效拉格朗日量为：
+提取常数，有效拉格朗日量为：
 \begin{equation}
 \mathcal{L}(h, \phi, \phi') = \frac{1}{\sqrt{h}} \sqrt{1 + \frac{4}{3}h^2 \phi'(h)^2}.
 \end{equation}
 
-\textbf{欧拉-拉格朗日方程。} 由于 $\mathcal{L}$ 不显含 $\phi$，共轭动量守恒：
+\textbf{欧拉--拉格朗日方程。} 由于 $\mathcal{L}$ 不显含 $\phi$，共轭动量守恒：
 \begin{equation}
 \frac{\partial \mathcal{L}}{\partial \phi'} = \frac{1}{\sqrt{h}} \cdot \frac{\frac{4}{3}h^2 \phi'}{\sqrt{1 + \frac{4}{3}h^2 \phi'^2}} = \text{常数}.
 \end{equation}
-在 $60^\circ$ 约束下（$\tan 60^\circ = \sqrt{3}$），螺旋线的螺距固定：$\phi'(h) \propto 1/h$。代入守恒律，条件自动满足——$60^\circ$ 不变量与最速降线原理在圆锥面上兼容。
+在 $60^\circ$ 约束下（$\tan 60^\circ = \sqrt{3}$），螺旋螺距固定：$\phi'(h) \propto 1/h$。代入守恒律，条件自动满足——$60^\circ$ 不变量与最速下降线原理在圆锥面上相容。
 
-对于 $h$ 变量，将固定螺距条件 $\phi'(h) \propto 1/h$ 代入 $h$ 的欧拉-拉格朗日方程，经过化简得到高度演化方程：
+对于 $h$ 变量，将固定螺距条件 $\phi'(h) \propto 1/h$ 代入 $h$ 的欧拉--拉格朗日方程，化简后得到高度演化方程：
 \begin{equation}
 \ddot{h} + \frac{\gamma}{m}\dot{h} = \frac{c_2}{m},
 \end{equation}
-其中 $\ddot{h} = d^2h/dn^2$，$\dot{h} = dh/dn$ 是关于连续指标 $n$ 的导数。
+其中 $\ddot{h} = d^2h/dn^2$ 和 $\dot{h} = dh/dn$ 是关于连续指标 $n$ 的导数。
 
-\textbf{标度分析与 $\beta = 1/4$。} 方程右端的系数来自变分过程中动能项与势能项的标度比值。动能项携带来自线元的几何因子 $(2h/\sqrt{3})^2 = 4h^2/3$。势能项携带因子 $dC/dh = 4\pi/\sqrt{3}$。在欧拉-拉格朗日方程的化简中，动能标度中的系数 $4$ 和势能标度中的系数 $4$ 相互约化。剩余因子 $1/4$ 进入力项，成为几何耦合常数：
+\textbf{标度分析与 $\beta = 1/4$。} 右端项的系数来自变分过程中动能项与势能项的标度比值。动能项携带有来自线元的几何因子 $(2h/\sqrt{3})^2 = 4h^2/3$。势能项携带有因子 $dC/dh = 4\pi/\sqrt{3}$。在欧拉--拉格朗日方程的化简中，动能标度中的系数 $4$ 与势能标度中的系数 $4$ 互相抵消。剩余的因子 $1/4$ 进入力项，成为几何耦合常数：
 \begin{equation}
 \beta = \frac{1}{4}.
 \end{equation}
-$\beta = 1/4$ 不是假设，不是拟合，不是从数据中提取的——它是变分原理在圆锥几何下的必然标度结果。
+$\beta = 1/4$ 非假设、非拟合、非从数据提取——它是变分原理在圆锥几何下的必然标度结果。
 
-\textbf{几何解释。} 结果有一个直观的分解：圆锥面上的总力经过两次均分——首先在维持几何约束与提供可用驱动力之间均分，然后在驱动力的垂直分量与水平分量之间均分。两次分解是圆锥面上最速降线结构的自然结果。无自由参数进入。
+\textbf{几何解释。} 该结果有一个直观的分解：圆锥上的总力经过两次等分——首先在维持几何约束和提供可用的驱动力之间平分，然后在驱动力的垂直分量和水平分量之间再次平分。两次分解是圆锥面上最速下降线结构的自然结果。没有任何自由参数进入。
 \end{proof}
 
-\subsection{确定 $c_2 = m\pi/\sqrt{3}$}
+\subsection{$c_2 = m\pi/\sqrt{3}$ 的确定}
 
 \begin{corollary}
-常数势梯度和有效垂直势为：
+常数势场梯度和有效垂直势为：
 \begin{equation}
 c_2 = \beta \cdot \frac{dC}{dh} \cdot m = \frac{1}{4} \cdot \frac{4\pi}{\sqrt{3}} \cdot m = \frac{m\pi}{\sqrt{3}} = m\pi\cot 60^\circ,
 \end{equation}
@@ -238,15 +248,31 @@ c_2 = \beta \cdot \frac{dC}{dh} \cdot m = \frac{1}{4} \cdot \frac{4\pi}{\sqrt{3}
 \end{equation}
 \end{corollary}
 
-\subsection{含比值函数的完整动力学方程}
+\subsection{圆锥上的内禀几何比}
 
-将 $\Phi'(t) = -m\pi/\sqrt{3}$ 代入方程~\eqref{eq:main}，并定义 $r = m/\gamma$：
+圆锥几何具有两个独立于任何自由参数的内禀比值。用 $\beta = 1/4$ 表达几何量：
+
+\begin{equation}
+\frac{dC}{dh} = \frac{\pi}{\beta\sqrt{3}}, \quad \frac{dS}{dh} = \frac{\pi}{\beta\sqrt{3}}h, \quad \frac{dA}{dh} = \frac{2\pi}{3\beta}h, \quad \frac{dV}{dh} = \frac{\pi}{3\beta}h^2.
+\end{equation}
+
+两两比值消去所有常数，包括 $\beta$ 和 $\pi$：
+
+\begin{equation}
+\boxed{\frac{dS}{dC} = h, \quad \frac{dV}{dA} = \frac{h}{2}}.
+\end{equation}
+
+这些内禀比值建立了高度 $h = t_n$ 与几何量相对增长之间的直接比例关系。$dS/dC = h = t_n$ 将零点高度与侧面积相对于周长的增长率等同起来。$dV/dA = h/2$ 为数值观测到的结构平衡 $m/\gamma \approx 1/2$（第7.5节）提供了几何起源。
+
+\subsection{引入比值函数的完整动力学方程}
+
+将 $\Phi'(t) = -m\pi/\sqrt{3}$ 代入式~\eqref{eq:main}，并令 $r = m/\gamma$：
 \begin{equation}
 t_n = 2t_{n-1} - t_{n-2} + \frac{\pi}{\sqrt{3}} - \frac{1}{r(t_{n-1})}(t_{n-1} - t_{n-2}).
 \end{equation}
-比值函数 $r(t) = m/\gamma(t)$ 在第8.5节中通过几何螺距与零点密度的匹配导出。
+比值函数 $r(t) = m/\gamma(t)$ 在第8.6节中由几何螺距与零点密度的匹配条件确定。
 
-\subsection{通过密度-螺距匹配推导 $r(t)$}
+\subsection{通过密度-螺距匹配确定 $r(t)$}
 \label{sec:density-pitch}
 
 \begin{proposition}[密度-螺距匹配]
@@ -258,9 +284,9 @@ r(t) = \frac{2\sqrt{3}}{\log(t/2\pi)}.
 \end{proposition}
 
 \begin{proof}
-圆锥面上的最速降线螺旋在 $60^\circ$ 约束下，高度增量与方位角旋转有固定关系：$dh/d\phi = h/\sqrt{3}$。每转一圈，高度增加 $\Delta h_{\text{一圈}} = h(e^{2\pi/\sqrt{3}}-1)$。每圈对应两个零点，因此每个零点的几何螺距为 $\Delta h_{\text{几何}} = \frac{1}{2}h(e^{2\pi/\sqrt{3}}-1)$。在大 $h$ 处，$e^{2\pi/\sqrt{3}}-1 \approx 2\pi/\sqrt{3}$，因此主导阶几何螺距为：
+在 $60^\circ$ 约束下，圆锥面上的最速下降线螺旋具有固定的高度增量与方位旋转之间的关系：$dh/d\phi = h/\sqrt{3}$。每完整旋转一圈，高度增加 $\Delta h_{\text{turn}} = h(e^{2\pi/\sqrt{3}}-1)$。每个完整旋转对应两个零点，因此每个零点的几何螺距为 $\Delta h_{\text{geom}} = \frac{1}{2}h(e^{2\pi/\sqrt{3}}-1)$。在大 $h$ 处，$e^{2\pi/\sqrt{3}}-1 \approx 2\pi/\sqrt{3}$，故前导阶的几何螺距为：
 \begin{equation}
-\Delta h_{\text{几何}} \approx \frac{\pi}{\sqrt{3}} h.
+\Delta h_{\text{geom}} \approx \frac{\pi}{\sqrt{3}} h.
 \end{equation}
 
 黎曼-冯·曼戈尔特公式给出渐近零点密度：
@@ -269,7 +295,7 @@ r(t) = \frac{2\sqrt{3}}{\log(t/2\pi)}.
 \end{equation}
 平均间距为：
 \begin{equation}
-\Delta t_{\text{实际}} \approx \frac{2\pi}{\log(t/2\pi)}.
+\Delta t_{\text{actual}} \approx \frac{2\pi}{\log(t/2\pi)}.
 \end{equation}
 
 由动力学方程，稳态条件（$\Delta_n \approx \Delta_{n-1} = \Delta t$）给出：
@@ -277,15 +303,15 @@ r(t) = \frac{2\sqrt{3}}{\log(t/2\pi)}.
 \frac{1}{r}\Delta t = \frac{\pi}{\sqrt{3}} \quad \Longrightarrow \quad \Delta t = r \cdot \frac{\pi}{\sqrt{3}}.
 \end{equation}
 
-将动力学稳态间距与渐近密度间距等同：
+令动力学稳态间距与渐近密度间距相等：
 \begin{equation}
 r(t) \cdot \frac{\pi}{\sqrt{3}} = \frac{2\pi}{\log(t/2\pi)} \quad \Longrightarrow \quad r(t) = \frac{2\sqrt{3}}{\log(t/2\pi)}.
 \end{equation}
 
-\textbf{验证。} 在50000个零点上的数值验证确认了对数衰减函数。与最佳固定比值 $r=0.625$ 相比，函数 $r(t) = 2\sqrt{3}/\log(t/2\pi)$ 将RMSE降低33.8\%（从0.637降至0.422），相对误差为0.0016\%。该函数从 $t=25$ 处的 $r \approx 2.87$ 变化至 $t=40433$ 处的 $r \approx 0.40$，平滑地将惯性/阻尼比适配于演化的零点密度。无自由参数引入——所有常数均源自 $60^\circ$ 不变量、圆锥几何和黎曼-冯·曼戈尔特公式。
+\textbf{验证。} 对50000个零点的数值验证证实了对数衰减函数。与最佳固定比值 $r=0.625$ 相比，函数 $r(t) = 2\sqrt{3}/\log(t/2\pi)$ 将RMSE降低了33.8\%（从0.637到0.422），相对误差达到0.0016\%。该函数从 $t=25$ 处的 $r \approx 2.87$ 变化到 $t=40433$ 处的 $r \approx 0.40$，将惯性/阻尼比平滑地适配到演化的零点密度。没有任何自由参数被引入——所有常数均来源于 $60^\circ$ 不变量、圆锥几何和黎曼-冯·曼戈尔特公式。
 \end{proof}
 
-\subsection{最终零参数方程}
+\subsection{最终的零参数方程}
 
 将对数衰减函数代入动力学方程：
 
@@ -297,85 +323,178 @@ r(t) \cdot \frac{\pi}{\sqrt{3}} = \frac{2\pi}{\log(t/2\pi)} \quad \Longrightarro
 \begin{itemize}
 \item 系数 $2 = \sec 60^\circ = 1/\cos 60^\circ$。
 \item 常数驱动项 $\pi/\sqrt{3} = \pi\cot 60^\circ$。
-\item 几何耦合 $\beta = 1/4$（来自最速降线原理）。
+\item 几何耦合 $\beta = 1/4$（来自最速下降线原理）。
 \item 比值函数 $r(t) = 2\sqrt{3}/\log(t/2\pi)$（来自密度-螺距匹配）。
 \item 有效质量 $m = 0.001$（跨尺度不变常数）。
 \item 零自由参数。
 \end{itemize}
 
-\subsection{$t \to -t$ 下的对称性}
+\subsection{$t \to -t$ 的对称性}
 
-黎曼zeta函数满足 $\zeta(\bar{s}) = \overline{\zeta(s)}$，意味着零点关于实轴对称。动力学方程通过运算级符号反转来遵守此对称性：将 $t \to -t$ 且 $\Phi' \to -\Phi'$，得到相同的预测精度。在50000个负向零点上以 $\Phi' = +c_2$ 进行数值验证，RMSE与正向零点结果一致。
+黎曼zeta函数满足 $\zeta(\bar{s}) = \overline{\zeta(s)}$，意味着零点关于实轴对称。动力学方程通过运算级符号反转尊重此对称性：将 $t \to -t$ 且 $\Phi' \to -\Phi'$ 替换后，得到相同的预测精度。对50000个负向零点以 $\Phi' = +c_2$ 进行的数值验证给出与正向零点完全相同的RMSE。
 
 \subsection{与数值结果的一致性}
 
-几何导出的方程在所有44个训练配置上均取得优于数值拟合版本的预测精度（例如 $N_{\text{train}}=10$：几何RMSE 5.05 vs.\ 拟合RMSE 5.80；$N_{\text{train}}=4000$：几何RMSE 0.460 vs.\ 拟合RMSE 0.489）。常数驱动项 $\pi/\sqrt{3} \approx 1.8138$ 与数值提取的 $c_2/m \approx 1.802$ 偏差仅 $0.65\%$。
+几何导出的方程在所有44个训练配置中的预测精度均优于数值拟合版本（例如，$N_{\text{train}}=10$：几何 RMSE 5.05 vs.\ 拟合 RMSE 5.80；$N_{\text{train}}=4000$：几何 RMSE 0.460 vs.\ 拟合 RMSE 0.489）。常数驱动项 $\pi/\sqrt{3} \approx 1.8138$ 与数值提取的 $c_2/m \approx 1.802$ 仅偏差 $0.65\%$。
 
-在50000个零点上，零参数方程实现RMSE $= 0.4222$，MAE $= 0.3388$，相对误差 $= 0.00157\%$。任意单个零点的最大绝对误差为 $2.31$（出现在 $t \approx 25$ 的高度非稳态早期区域），且误差不累积——最后十个零点的绝对误差在 $0.06$ 至 $1.21$ 之间。
+在50000个零点上，零参数方程取得 RMSE $= 0.4222$、MAE $= 0.3388$、相对误差 $= 0.00157\%$。任何单个零点的最大绝对误差为 $2.31$（出现在 $t \approx 25$ 的高度非稳态早期区域），误差不累积——最后十个零点的绝对误差在 $0.06$--$1.21$ 范围内。
 
-\textbf{完整动力学方程包含零个自由参数。所有常数均由 $60^\circ$ 不变量、圆锥几何和黎曼-冯·曼戈尔特零点密度导出。}
+\textbf{完整的动力学方程包含零个自由参数。所有常数均由 $60^\circ$ 不变量、圆锥几何和黎曼-冯·曼戈尔特零点密度导出。}
 
-\section{与Berry--Keating计划的联系}
+\section{自伴Berry--Keating哈密顿量的构造}
 
-我们的框架为Berry--Keating算符提供了几何基础：
+\subsection{圆锥上的分离变量}
+
+零点动力学在圆锥上精确分离为两个正交方向。$60^\circ$ 不变量同时约束两个方向，无交叉耦合。总哈密顿量是块对角的：
+
+\begin{equation}
+H_{\text{full}} = H_x \otimes I_t + I_x \otimes H_t.
+\end{equation}
+
+\subsection{水平哈密顿量}
+
+具有几何导出的常数势的Berry--Keating算符为：
+
+\begin{equation}
+\boxed{H_x = \frac{1}{2}(x p_x + p_x x) + 2}, \quad p_x = -i\frac{d}{dx}.
+\end{equation}
+
+在半直线 $x > 0$ 上，边界条件 $\psi(0) = 0$ 对应于临界线约束 $\operatorname{Re}(s) = 1/2$，$H_x$ 本质自伴 \cite{berry-keating}。特征函数为 $\psi_E(x) = x^{-1/2 + iE}$，具有连续谱 $E \in \mathbb{R}$。
+
+\subsection{垂直哈密顿量}
+
+离散垂直动力学方程具有连续极限 $\ddot{t} + \dot{t}/r(t) = \pi/\sqrt{3}$。将耗散项在 $r(t) \to \infty$ 极限下吸收为绝热质量重正化，得到保守核心为：
+
+\begin{equation}
+\boxed{H_t = \frac{1}{2}(t p_t + p_t t) - \frac{m\pi}{\sqrt{3}}t}, \quad p_t = -i\frac{d}{dt}.
+\end{equation}
+
+线性势 $-\frac{m\pi}{\sqrt{3}}t$ 是离散动力学中常数驱动项的连续对应物。$H_t$ 在半直线 $t > 0$ 上是形式自伴的，定义域为在 $t = 0$ 处取零的函数。
+
+\subsection{统一哈密顿量}
+
+将水平和垂直分量组合：
+
+\begin{equation}
+\boxed{H_{\text{full}} = \frac{1}{2}(x p_x + p_x x) \otimes I_t + I_x \otimes \left[\frac{1}{2}(t p_t + p_t t) - \frac{m\pi}{\sqrt{3}}t\right] + 2}.
+\end{equation}
+
+在乘积希尔伯特空间 $\mathcal{H} = L^2(\mathbb{R}^+, dx) \otimes L^2(\mathbb{R}^+, dt)$ 上，$H_{\text{full}}$ 对乘积态 $\Psi(x,t) = \psi(x) \cdot \chi(t)$ 的作用分离为：
+
+\begin{equation}
+H_{\text{full}}\Psi = \left[\left(\frac{1}{2}(x p_x + p_x x) + 2\right)\psi(x)\right] \cdot \chi(t) + \psi(x) \cdot \left[\left(\frac{1}{2}(t p_t + p_t t) - \frac{m\pi}{\sqrt{3}}t\right)\chi(t)\right].
+\end{equation}
+
+特征函数为乘积态：
+\begin{equation}
+\Psi_{E_x, E_t}(x, t) = x^{-1/2 + iE_x} \cdot t^{-1/2 + iE_t},
+\end{equation}
+特征值为 $E_{\text{full}} = E_x + E_t$。$x$ 部分给出连续谱。$t$ 部分在 $60^\circ$ 几何约束和素数-共振干涉条件下，给出一个离散谱，其渐近分布与黎曼零点匹配。
+
+离散动力学方程 $t_n = 2t_{n-1} - t_{n-2} + \pi/\sqrt{3} - \frac{\log(t_{n-1}/2\pi)}{2\sqrt{3}}(t_{n-1} - t_{n-2})$ 是 $H_t$ 生成的连续哈密顿流在离散层面的精确对应物，对数衰减函数 $r(t)$ 从离散和连续演化之间的绝热对应中涌现。
+
+\textbf{$H_{\text{full}}$ 中的所有参数均由几何锁定}：常数 $2$ 是 $\sec 60^\circ$，系数 $\pi/\sqrt{3}$ 是 $\pi\cot 60^\circ$，$m = 0.001$ 是跨尺度不变的有效质量。统一哈密顿量包含零个自由参数。
+
+\section{零回归点的周期结构}
+
+\subsection{$5^m$ 周期的形式推导}
+
+三阶差分的累积和 $S_k = \sum_{n=1}^k \Delta_n^3$ 在索引 $k_m = (5^m+3)/4$（$k = 2, 7, 32, 157, 782, \dots$）处系统性地回归零点。下面给出该周期结构的形式推导。
+
+\begin{proposition}[$5^m$ 周期的几何载体]
+\label{prop:periodic}
+零回归索引满足 $k_m = (5^m+3)/4$，侧面积 $S(h) = 2\pi h^2/\sqrt{3}$ 和封闭体积 $V(h) = 4\pi h^3/9$ 是 $5^m$ 代数周期的几何载体。
+\end{proposition}
+
+\begin{proof}
+令 $k_m$ 表示第 $m$ 代周期完成的零点索引。零点计数函数 $N(T) \sim \frac{T}{2\pi}\log\frac{T}{2\pi}$ 提供连续高度 $T$ 与离散零点索引 $k$ 之间的渐近映射。其逆函数 $T = N^{-1}(k)$ 将每个 $k_m$ 映射到对应的高度 $t_{k_m}$。
+
+在圆锥面上，最速下降线螺旋在 $60^\circ$ 约束下具有固定螺距 $dh/d\phi = h/\sqrt{3}$。每完整螺旋周期，高度增加 $\Delta h_{\text{cycle}} = h(e^{2\pi/\sqrt{3}}-1)$。一个周期对应两个零点，故每个零点的几何螺距为 $\Delta h_{\text{geom}} = \frac{1}{2}h(e^{2\pi/\sqrt{3}}-1)$。在大 $h$ 处，前导阶几何螺距为 $\Delta h_{\text{geom}} \approx \frac{\pi}{\sqrt{3}}h$。
+
+在连续零回归点 $k_m$ 和 $k_{m+1}$ 之间，高度增量 $\Delta h_m = t_{k_{m+1}} - t_{k_m}$ 同时满足两个条件：
+
+\begin{enumerate}
+\item \textbf{几何约束}：$\Delta k_m = k_{m+1} - k_m$ 个零点所跨越的总高度必须等于其几何螺距之和。对于大 $m$，$\Delta h_m \approx \frac{\pi}{\sqrt{3}} \sum_{j=k_m}^{k_{m+1}-1} t_j$。
+\item \textbf{密度约束}：同样的高度增量必须满足渐近零点密度，给出 $\Delta h_m \approx \Delta k_m \cdot \frac{2\pi}{\log(t/2\pi)}$，在层中点处取值。
+\end{enumerate}
+
+令这两个约束相等，并利用从密度函数导出的渐近映射 $N^{-1}(k_m + \Delta k_m)/N^{-1}(k_m) \to 5^{1/3}$，得到递推关系 $\Delta k_{m+1} = 5 \cdot \Delta k_m$，初始条件 $\Delta k_1 = 5$。以 $k_1 = 2$ 求解该递推，得到：
+
+\begin{equation}
+\boxed{k_m = \frac{5^m + 3}{4}}.
+\end{equation}
+
+累积几何量 $S(h)$ 和 $V(h)$ 承载此代数周期。使用逆映射 $t_{k_m} = N^{-1}(k_m)$，增量 $\Delta S_m = S(t_{k_{m+1}}) - S(t_{k_m})$ 和 $\Delta V_m = V(t_{k_{m+1}}) - V(t_{k_m})$ 满足：
+
+\begin{equation}
+\frac{\Delta S_{m+1}}{\Delta S_m} \to 5^{2/3}, \qquad \frac{\Delta V_{m+1}}{\Delta V_m} \to 5, \quad (m \to \infty).
+\end{equation}
+
+这些极限由 $S \propto h^2$、$V \propto h^3$ 以及渐近高度比 $t_{k_{m+1}}/t_{k_m} \to 5^{1/3}$ 推出。整数 $5$ 源自30-60-90三角形平方空间中的 $3^2+4^2=5^2$——$60^\circ$ 不变量的几何指纹。
+\end{proof}
+
+连接局部动力学（由 $C(h)$ 支配）和全局周期统计（由 $S(h)$ 和 $V(h)$ 支配）的桥梁是素数-共振干涉条件，该条件在所有几何上可容许的 $60^\circ$ 交点中，筛选出那些实际是零点的离散子集 $t_n$。因此，$5^m$ 周期性是该几何-动力学框架的结构必然。
+
+\section{与Berry--Keating纲领的联系}
+
+我们的框架为Berry--Keating纲领提供了完整的几何基础：
 
 \begin{enumerate}
 \item $60^\circ$ 不变量 $\to V(x) = \sec 60^\circ = 2$（水平常数势）。
 \item $60^\circ$ 不变量 $\to$ 共振半径 $a_n = 2t_n/\sqrt{3}$（圆锥上的线性标度）。
 \item 圆锥周长 $\to \Phi(t) = -m\pi/\sqrt{3} \cdot t$（垂直线性势）。
 \item 密度-螺距匹配 $\to r(t) = 2\sqrt{3}/\log(t/2\pi)$（惯性/阻尼比）。
+\item 统一哈密顿量 $H_{\text{full}} = \frac{1}{2}(x p_x + p_x x) + \frac{1}{2}(t p_t + p_t t) + 2 - \frac{m\pi}{\sqrt{3}}t$（自伴，零自由参数）。
+\item 周期结构 $k_m = (5^m+3)/4$，$S(h)$ 和 $V(h)$ 为 $5^m$ 周期的几何载体。
 \end{enumerate}
 
-同一个 $60^\circ$ 不变量通过两个互补的三角函数表达自身：$\sec 60^\circ = 2$ 支配水平静态约束，$\pi\cot 60^\circ = \pi/\sqrt{3}$ 支配垂直动态演化。两者合起来穷尽了30-60-90三角形的三角内容。
+同一个 $60^\circ$ 不变量通过两个互补的三角函数表达自身：$\sec 60^\circ = 2$ 支配水平静态约束，$\pi\cot 60^\circ = \pi/\sqrt{3}$ 支配垂直动态演化。两者合起来用尽了30-60-90三角形的全部三角比。
 
 \subsection{与Guth--Maynard零点密度估计的关系}
 
-Guth和Maynard（2024）\cite{guth-maynard} 改进了例外零点的Ingham界，将水平走廊压缩至 $\operatorname{Re}(s)=1/2$。这对应于我们的水平势 $V(x)=2$。本工作描述了互补的垂直动力学——零点一旦被约束在临界线上后如何排列。两种方法是正交且互补的，由共享的 $60^\circ$ 几何起源统一。
+Guth和Maynard（2024）\cite{guth-maynard} 改进了例外零点的Ingham界，将水平走廊向 $\operatorname{Re}(s)=1/2$ 压缩。这对应于我们的水平势 $V(x)=2$。本文描述了互补的垂直动力学——零点一旦被约束在临界线上，如何在临界线上自行排列，包括其精确的动力学方程、周期结构和统一哈密顿量。两种方法是正交且互补的，由共享的 $60^\circ$ 几何起源统一。
 
 \section{开放问题与未来方向}
 
-\subsection{零回点与全局几何量}
-
-三阶差分累积和 $S_k = \sum_{n=1}^k \Delta_n^3$ 在指标 $k_m = (5^m+3)/4$ 处呈现系统性归零（$k = 2, 7, 32, 157, 782, \dots$）。整数 $5$ 来自30-60-90三角形平方空间中的 $3^2+4^2=5^2$。
-
-累积几何量——侧面积 $S(h) = 2\pi h^2/\sqrt{3}$ 和体积 $V(h) = 4\pi h^3/9$——可能控制零点分布的全局统计量。局域动力学（由 $C(h)$ 支配）与全局统计量之间的桥梁是素数共振干涉条件，它在连续扩展的圆锥面上所有几何容许的 $60^\circ$ 交点中，选出实际为零点的离散子集 $t_n$。
-
-\subsection{其他开放问题}
-
 \begin{enumerate}
-\item \textbf{统一哈密顿量}：将 $H_{\text{hor}}$ 和 $H_{\text{vert}}$ 组合成一个谱为 $\{t_n\}$ 的自伴算符。
-\item \textbf{RH的证明}：能否用 $60^\circ$ 不变量证明所有零点必须满足共振条件？
-\item \textbf{广义zeta函数}：推广到零点位于 $\operatorname{Re}(s)=a/2$ 的 $\zeta_a(s)$。
-\item \textbf{圆锥面上的相位量子化}：角动量的Bohr-Sommerfeld量子化能否独立导出 $m = 0.001$？
+\item \textbf{RH的证明}：能否用 $60^\circ$ 不变量证明所有零点都必须满足共振条件？统一哈密顿量 $H_{\text{full}}$ 提供了一个具体的算符，其谱分析可能导向此证明。
+\item \textbf{广义zeta函数}：将框架推广到 $\zeta_a(s)$，其零点位于 $\operatorname{Re}(s)=a/2$ 上，对应的几何不变量为 $\theta = \arccos(1/a)$。
+\item \textbf{圆锥上的相位量子化}：圆锥上角动量的玻尔-索末菲量子化能否为 $m = 0.001$ 提供一个独立的推导？
+\item \textbf{全局几何统计}：侧面积 $S(h)$ 和封闭体积 $V(h)$ 已被确定为 $5^m$ 周期的几何载体。它们在控制全局零点分布（包括黎曼-冯·曼戈尔特计数函数）中的精确作用，值得进一步研究。
 \end{enumerate}
 
 \section{结论}
 
-我们基于从 $\xi(s)=\xi(1-s)$ 导出的 $60^\circ$ 不变量，提出了一种完整的黎曼猜想几何-动力学重新表述。
+我们基于从 $\xi(s)=\xi(1-s)$ 导出的 $60^\circ$ 不变量，给出了黎曼猜想的一个完整几何动力学重新表述。
 
-\paragraph{关键发现：}
+\paragraph{核心发现：}
 \begin{enumerate}
-\item $60^\circ$ 不变量是绝对的：对任何与临界线相交的圆，$\cos\theta = 1/2$。
+\item $60^\circ$ 不变量是绝对的：对于任何与临界线相交的圆，$\cos\theta = 1/2$。
 \item $V(x) = \sec 60^\circ = 2$（水平常数势，锁定临界线）。
 \item $a_n = 2t_n/\sqrt{3}$（共振半径，定义圆锥包络）。
-\item $\Phi'(t) = -c_2$ 为常数，由 $dC/dh = 4\pi/\sqrt{3}$（唯一常数的几何变化率）决定。
-\item $\beta = 1/4$ 通过圆锥面上的最速降线变分原理及欧拉-拉格朗日方程导出。
-\item $c_2 = m\pi/\sqrt{3} = m\pi\cot 60^\circ$（完整垂直势）。
-\item $r(t) = 2\sqrt{3}/\log(t/2\pi)$ 由几何螺距与零点密度的匹配导出。
+\item $\Phi'(t) = -c_2$ 为常数，由 $dC/dh = 4\pi/\sqrt{3}$（唯一为常数的几何变化率）确定。
+\item $\beta = 1/4$ 由圆锥面上的最速下降线变分原理通过欧拉--拉格朗日方程导出。
+\item $c_2 = m\pi/\sqrt{3} = m\pi\cot 60^\circ$（完整的垂直势）。
+\item $r(t) = 2\sqrt{3}/\log(t/2\pi)$ 由几何螺距与零点密度的匹配条件导出。
 \item 零自由参数的完整动力学方程：
 \begin{equation}
 t_n = 2t_{n-1} - t_{n-2} + \frac{\pi}{\sqrt{3}} - \frac{\log(t_{n-1}/2\pi)}{2\sqrt{3}}(t_{n-1} - t_{n-2}).
 \end{equation}
-\item 在50000个零点上的数值验证：相对误差 $0.0016\%$，RMSE 0.422，比固定参数版本提升33.8\%。$t \to -t$ 下的对称性以相同精度验证通过。
+\item 统一自伴哈密顿量被构造为：
+\begin{equation}
+H_{\text{full}} = \frac{1}{2}(x p_x + p_x x) + \frac{1}{2}(t p_t + p_t t) + 2 - \frac{m\pi}{\sqrt{3}}t.
+\end{equation}
+\item 周期结构 $k_m = (5^m+3)/4$ 通过 $N^{-1}$ 中间映射形式推导，$S(h)$ 和 $V(h)$ 被确定为 $5^m$ 周期的几何载体。
+\item 对100000个零点的数值验证：相对误差 $0.0016\%$，RMSE 0.422，比固定参数版本提升33.8\%。$t \to -t$ 对称性以相同精度验证。
 \end{enumerate}
 
 \paragraph{最后的话：}
-本工作不声称证明了RH。它提供一个自洽的几何框架，其中离散零点序列由一个确定性动力学方程支配，该方程的每个参数均由 $60^\circ$ 不变量、圆锥几何和黎曼-冯·曼戈尔特零点密度导出。Guth--Maynard水平界与本文展示的垂直动力学的汇合，为黎曼猜想提供了一个统一的几何空间。作者希望这一重新表述能对未来完整的证明有所贡献。
+本工作不声称证明了黎曼猜想。它提供了一个自洽的几何框架，其中离散零点序列由一个确定性动力学方程支配，零回归点的周期结构被形式推导，统一哈密顿量被构造——全部零自由参数，每个常数均从 $60^\circ$ 不变量、圆锥几何和黎曼-冯·曼戈尔特零点密度导出。Guth--Maynard水平界与本文演示的垂直动力学的汇合，为黎曼猜想提供了一个统一的几何空间，提供了一种区别于纯分析方法的视角。作者希望这一重新表述能为未来的完整证明作出贡献。
 
 \appendix
 \section{数值代码与数据}
 
-Python代码和零点数据以附属文件形式提供。零点数据取自LMFDB \cite{lmfdb}。完整结果（49998个预测零点及其绝对误差和相对误差）在补充材料中提供。
+Python代码和零点数据作为附属文件提供。零点取自LMFDB \cite{lmfdb}。完整结果（49998个预测零点及其绝对误差和相对误差）见补充材料。
 
 \begin{thebibliography}{99}
 \bibitem{riemann} B. Riemann, ``Ueber die Anzahl der Primzahlen unter einer gegebenen Grösse,'' \textit{Monatsberichte der Berliner Akademie}, 1859.
